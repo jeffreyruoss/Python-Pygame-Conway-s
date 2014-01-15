@@ -38,10 +38,9 @@ class Cell(pygame.sprite.Sprite):
 
 	def update(self, game):
 		self.click_activate_deactivate(game)
-
 		if game.simulation_running == True:
 			self.count_live_neighbors(game)
-
+		
 	def click_activate_deactivate(self, game):
 		if self.rect.collidepoint(pygame.mouse.get_pos()) and game.mouse_button_up == True:
 			if self.image == Constants.CELL_DEAD:
@@ -50,15 +49,35 @@ class Cell(pygame.sprite.Sprite):
 				self.image = Constants.CELL_DEAD
 			game.mouse_button_up = False
 
-	def count_live_neighbors(self, game):
-		self.num_neighbors = 0
-		for cell in AllCells.cell_list:
-			if cell.ID != self.ID and cell.image == Constants.CELL_ALIVE: # not comparing against itself and the cell to check is alive
-				if cell.rect.bottom == self.rect.top and cell.rect.right == self.rect.left: # if it has a top left corner neighbor
-					self.num_neighbors += 1
-				if cell.rect.bottom == self.rect.top and cell.rect.left == self.rect.left: # if it has a top neighbor
-					self.num_neighbors += 1
-		if self.test == True:
-			print 'self.ID: ', self.ID, ' - cell.ID: ', cell.ID, ' - num_neighbors: ', self.num_neighbors
-			self.test = False
 
+	def count_live_neighbors(self, game):
+		if self.test == True:
+			self.num_neighbors = 0
+			for cell in AllCells.cell_list:
+				if cell.ID != self.ID and cell.image == Constants.CELL_ALIVE and self.image == Constants.CELL_ALIVE: #if cell is not the same and is alive
+					if self.rect.top == cell.rect.bottom and self.rect.left == cell.rect.right:
+						print 'cell ', self.ID, 'has a neighbor to the top-left'
+						self.num_neighbors += 1
+					if self.rect.top == cell.rect.bottom and self.rect.left == cell.rect.left:
+						print 'cell ', self.ID, 'has a neighbor to the top'
+						self.num_neighbors += 1
+					if self.rect.top == cell.rect.bottom and self.rect.right == cell.rect.left:
+						print 'cell ', self.ID, 'has a neighbor to the top-right'
+						self.num_neighbors += 1
+					if self.rect.right == cell.rect.left and self.rect.top == cell.rect.top:
+						print 'cell ', self.ID, 'has a neighbor to the right'
+						self.num_neighbors += 1
+					if self.rect.right == cell.rect.left and self.rect.bottom == cell.rect.top:
+						print 'cell ', self.ID, 'has a neighbor to the bottom-right'
+						self.num_neighbors += 1
+					if self.rect.bottom == cell.rect.top and self.rect.right == cell.rect.right:
+						print 'cell ', self.ID, 'has a neighbor to the bottom'
+						self.num_neighbors += 1
+					if self.rect.bottom == cell.rect.top and self.rect.left == cell.rect.right:
+						print 'cell ', self.ID, 'has a neighbor to the bottom-left'
+						self.num_neighbors += 1
+					if self.rect.left == cell.rect.right and self.rect.top == cell.rect.top:
+						print 'cell ', self.ID, 'has a neighbor to the left'
+						self.num_neighbors += 1
+			print self.ID, 'has', self.num_neighbors, 'neighbors'
+			self.test = False
