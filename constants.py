@@ -5,9 +5,9 @@ class Constants:
 	INFO_UI_HEIGHT = 100
 	MARGIN = 50
 	SCREEN_SIZE = [LIVE_AREA_SIZE[0] + MARGIN, LIVE_AREA_SIZE[1] + INFO_UI_HEIGHT + MARGIN]
-	ROWS = 15
+	ROWS = 15 # NOTE: on my machine, it starts to run slow at 15x15 on 'MAX'
 	COLS = 15
-	SIMULATION_SPEED = 1 # 30 == 1 second
+	SIMULATION_SPEED = 'MAX' # 'MAX' (30 fps) or an integer (30 == 1 second)
 	CELL_WIDTH = LIVE_AREA_SIZE[0] / COLS
 	CELL_HEIGHT = LIVE_AREA_SIZE[1] / ROWS
 	CELL_SIZE = [CELL_WIDTH, CELL_HEIGHT]

@@ -89,12 +89,16 @@ class Cell(pygame.sprite.Sprite):
 		# print self.ID, 'has', self.num_live_neighbors, 'neighbors'
 
 	def counter_timer(self, game):
-		if self.counter >= Constants.SIMULATION_SPEED:
+		if Constants.SIMULATION_SPEED == 'MAX' or Constants.SIMULATION_SPEED == 'max':
 			self.count_live_neighbors(game)
-			self.counter = 0
 			self.evolution_cycle()
 		else:
-			self.counter += 1
+			if self.counter >= Constants.SIMULATION_SPEED:
+				self.count_live_neighbors(game)
+				self.counter = 0
+				self.evolution_cycle()
+			else:
+				self.counter += 1
 
 	def evolution_cycle(self):
 		if self.image == Constants.CELL_ALIVE:
